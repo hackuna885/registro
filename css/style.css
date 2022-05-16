@@ -1,0 +1,62 @@
+@page {
+  margin: 0px;
+  padding: 0px; }
+@media only screen and (max-width: 991px) {
+  .h4 {
+    font-size: 1.4em !important; } }
+* {
+  margin: 0px;
+  padding: 0px;
+  font-family: Nunito; }
+
+.form-control-user {
+  border-radius: 2em;
+  padding: 1.1em 1.1em; }
+
+.form-check-input:checked {
+  background-color: #185975;
+  border-color: #185975; }
+
+.letraPeque {
+  font-size: .8em;
+  color: #717A82; }
+
+.mayusculas {
+  text-transform: uppercase; }
+
+::-webkit-input-placeholder {
+  text-transform: initial; }
+
+:-moz-placeholder {
+  text-transform: initial; }
+
+::-moz-placeholder {
+  text-transform: initial; }
+
+:-ms-input-placeholder {
+  text-transform: initial; }
+
+.btn-primary {
+  background-color: #185975 !important;
+  border: #185975; }
+
+a {
+  color: #185975;
+  text-decoration: none;
+  background-color: transparent; }
+
+hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border-width: 1px 0px 0px;
+  border-right-style: initial;
+  border-bottom-style: initial;
+  border-left-style: initial;
+  border-right-color: initial;
+  border-bottom-color: initial;
+  border-left-color: initial;
+  border-image: initial;
+  border-top-style: solid;
+  border-top-color: rgba(0, 0, 0, 0.1); }
+
+/*# sourceMappingURL=style.css.map */

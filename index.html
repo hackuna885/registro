@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foro de Redes y Telecomunicaciones UTFV 2022</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    
+    <div class="container-fluid" id="app">
+
+        <div class="row justify-content-center align-items-center vh-100 animate__animated animate__fadeIn">
+
+            <div class="col-md-10 mx-auto">
+                <div class="row justify-content-center align-items-center vh-100">
+
+                    <div class="col-lg-6 mx-auto text-center p-0 animate__animated animate__bounceInLeft">
+                        <img src="img/banner1.jpg" class="mx-auto img-fluid d-none d-lg-block">
+                        <img src="img/banner2.jpg" class="mx-auto img-fluid d-block d-lg-none">
+                    </div>
+                    <div class="col-lg-6 mx-auto animate__animated animate__bounceInDown">
+                        <div class="mx-2 mx-md-5 my-md-5 my-3">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 my-4 animate__animated animate__bounceInDown" style="color: #185975;">¡Registra tu asistencia al Foro!</h1>
+                            </div>
+
+                            <!-- Inicia Form -->
+
+                            <form class="user" @submit.prevent="alta">
+                                <div class="form-group row">
+                                    <div class="col-sm-6 col-lg-12 mb-3 mb-sm-0">
+                                        <input type="text" class="form-control form-control-user mb-3 mayusculas" v-model="nUsr" placeholder="Nombre(s)*" @keypress="soloLetras" minlength="3" required />
+                                    </div>
+                                    <div class="col-sm-6 col-lg-12 mb-3 mb-sm-0">
+                                        <input type="text" class="form-control form-control-user mb-3 mayusculas" v-model="aPat" placeholder="Apellido Paterno*" @keypress="soloLetras" minlength="3" required />
+                                    </div>
+                                    <div class="col-sm-6 col-lg-12 mb-3 mb-sm-0">
+                                        <input type="text" class="form-control form-control-user mb-3 mayusculas" v-model="aMat" placeholder="Apellido Materno*" @keypress="soloLetras" minlength="3" required />
+                                    </div>
+                                    <div class="col-sm-6 col-lg-12 mb-3 mb-sm-0"></div>
+                                    <div class="col-12 mb-3 mb-sm-0 text-center">
+                                        <label class="form-label h5" style="color: #185975;">Institución Educativa:</label>
+                                        <br>
+                                        <div class="form-check form-check-inline mb-3" style="font-size: 2em;">
+                                            <input class="form-check-input" type="radio" id="uno" value="UTFV" v-model="iEdu">
+                                            <label class="form-check-label" style="font-size: .5em;" for="uno">UTFV</label>
+                                        </div>
+                                        <div class="form-check form-check-inline mb-3" style="font-size: 2em;">
+                                            <input class="form-check-input" type="radio" id="dos" value="CECYTEM" v-model="iEdu">
+                                            <label class="form-check-label" style="font-size: .5em;" for="dos">CECyTEM</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-12 mb-3 mb-sm-0">
+                                        <select class="form-select form-control-user letraPeque mb-3" style="padding: 1.3em 1.2em;" v-model="tUsr" @chan>
+                                            <option value="ESTUDIANTE" selected>ESTUDIANTE</option>
+                                            <option value="DOCENTE">DOCENTE</option>
+                                            <option value="ADMINISTRATIVO">ADMINISTRATIVO</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6 col-lg-12 mb-3 mb-sm-0"></div>
+
+                                    <div v-if="tUsr === 'ESTUDIANTE'" class="row p-1 m-0">
+                                    
+                                        <div class="col-12 mb-3 mb-sm-0">
+                                            <select class="form-select form-control-user letraPeque mb-3" style="padding: 1.5em 1.2em;" v-model="proEduca">
+                                                <option v-for="pEd in proEdu" :value="pEd" style="font-size: .8em;">{{pEd}}</option>
+                                            </select>
+                                        </div>
+                                        
+
+                                        <div class="col-sm-6 col-lg-12 mb-3 mb-sm-0">
+                                            <input type="text" class="form-control form-control-user mb-3 mayusculas" v-model="grupo" placeholder="Grupo*" minlength="3" required />
+                                        </div>
+                                        
+
+                                        <div class="col-sm-6 col-lg-12 mb-3 mb-sm-0">
+                                            <select class="form-select form-control-user letraPeque mb-3" style="padding: 1.5em 1.2em;" v-model="turno">
+                                                <option value="MATUTINO">MATUTINO</option>
+                                                <option value="VESPERTINO">VESPERTINO</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    {{resetProEdu}}
+
+                                    <div class="col-sm-6 col-lg-12 mb-3 mb-sm-0">
+                                        <input type="text" class="form-control form-control-user mb-3" v-model="tel" placeholder="Teléfono" pattern="[0-9]+" @keypress="soloNumeros" minlength="8" maxlength="15"/>
+                                    </div>
+
+                                    <div class="col-sm-6 col-lg-12 mb-3 mb-sm-0">
+                                        <input type="email" class="form-control form-control-user mb-3" v-model="nCorreo" placeholder="Correo electrónico*"  minlength="10" required />
+                                    </div>
+                                    <div class="col-12 mb-3 mb-sm-0">
+                                        <button class="btn btn-primary btn-lg form-control form-control-user my-3" :disabled="this.nUsr != '' &&  this.aPat != '' && this.aMat != '' && this.nCorreo != '' ?  this.estadoBtn = false : this.estadoBtn = true">Registrar</button>
+                                    </div>
+
+                                    
+                                    
+                                    
+
+                                </div>
+                            </form>
+
+                            <!-- Inicia Form -->
+
+                            <hr>
+                            <div class="text-center">
+                                <a href="reenviar/qr.app">¿Ya te habías registrado? ¡Reenviar QR!</a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            
+        </div>
+
+
+
+
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/axios.min.js"></script>
+    <script src="js/sweetalert2@11.js"></script>
+    <script src="js/vue@2.js"></script>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                datos: '',
+                proEdu: [
+                'T.S.U. ADMINISTRACIÓN ÁREA CAPITAL HUMANO',
+                'T.S.U. CONTADURÍA',
+                'T.S.U. DESARROLLO DE NEGOCIOS ÁREA MERCADOTECNIA',
+                'T.S.U. DESARROLLO DE SOFTWARE MULTIPLATAFORMA',
+                'T.S.U. DISEÑO DIGITAL ÁREA ANIMACIÓN',
+                'T.S.U. ENERGÍAS RENOVABLES ÁREA ENERGÍA SOLAR',
+                'T.S.U. INFRAESTRUCTURA DE REDES DIGITALES',
+                'T.S.U. LOGÍSTICA ÁREA TRANSPORTE TERRESTRE',
+                'T.S.U. MANTENIMIENTO ÁREA INDUSTRIAL',
+                'T.S.U. MECATRÓNICA',
+                'T.S.U. NANOTECNOLOGÍA ÁREA MATERIALES ',
+                'T.S.U. PROCESOS INDUSTRIALES ÁREA AUTOMOTRIZ',
+                'T.S.U. PROCESOS INDUSTRIALES ÁREA TECNOLOGÍA GRÁFICA',
+                'T.S.U. QUIMICA ÁREA TECNOLOGÍA AMBIENTAL',
+                'T.S.U. TERAPÍA FÍSICA ÁREA REHABILITACIÓN',
+                'ING. DESARROLLO Y GESTIÓN DE SOFTWARE',
+                'ING. ENERGÍAS RENOVABLES',
+                'ING. MANTENIMIENTO INDUSTRIAL',
+                'ING. MECATRÓNICA',
+                'ING. NANOTECNOLOGÍA',
+                'ING. REDES INTELIGENTES Y CIBERSEGURIDAD',
+                'ING. SISTEMAS PRODUCTIVOS',
+                'ING. TECNOLOGÍA AMBIENTAL',
+                'LIC. CONTADURÍA',
+                'LIC. DISEÑO DIGITAL Y PRODUCCIÓN AUDIOVISUAL',
+                'LIC. DISEÑO Y GESTIÓN DE REDES LOGÍSTICAS',
+                'LIC. ENERGÍAS RENOVABLES',
+                'LIC. ENFERMERÍA',
+                'LIC. GESTIÓN DEL CAPITAL HUMANO',
+                'LIC. INNOVACIÓN DE NEGOCIOS Y MERCADOTECNIA'
+                ],
+                proEduca: 'T.S.U. INFRAESTRUCTURA DE REDES DIGITALES',
+                grupo: '',
+                turno: 'MATUTINO',
+                nUsr: '',
+                aPat: '',
+                aMat: '',
+                iEdu: 'UTFV',
+                tUsr: 'ESTUDIANTE',
+                tel: '',
+                nCorreo: '',
+                estadoBtn: '' 
+                
+            },
+            computed: {
+                resetProEdu () {
+                    if (this.tUsr != 'ESTUDIANTE') {
+                        this.proEduca = ''
+                        this.turno = ''
+                    }
+                }
+
+            },
+            methods: {
+                alta () {
+                axios.post('../registro/alta.app', {
+                    opcion: 1,
+                    nUsr: this.nUsr,
+                    aPat: this.aPat,
+                    aMat: this.aMat,
+                    nInst: this.nInst,
+                    rfc: this.rfc,
+                    tel: this.tel,
+                    nCorreo: this.nCorreo,
+                    passUsr: this.passUsr,                
+                })
+                .then(response => {
+                    if (response.data === 'correcto') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡Alta exitosa!',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            onClose: () => {  
+                            window.location="https://sfpya.edomexico.gob.mx/recaudacion/";
+                            }
+                        })
+                    }else{
+                        this.datos = response.data
+                        // console.log(response.data)
+                    }
+                })
+            },
+            soloLetras () {
+                if (event.keyCode > 32 && event.keyCode < 48 || event.keyCode > 47 && event.keyCode < 58 || event.keyCode > 57 && event.keyCode < 65 || event.keyCode > 90 && event.keyCode < 97 || event.keyCode > 122 && event.keyCode < 160 || event.keyCode > 166 && event.keyCode < 190 || event.keyCode > 189 && event.keyCode < 221) event.returnValue = false
+            },
+            // soloLetras () {
+            //     if (event.keyCode > 32 && event.keyCode < 48 || event.keyCode > 57 && event.keyCode < 65 || event.keyCode > 90 && event.keyCode < 97 || event.keyCode > 122 && event.keyCode < 160 || event.keyCode > 166 && event.keyCode < 190) event.returnValue = false
+            // },
+            soloNumeros () {
+                if (event.keyCode >= 32 && event.keyCode < 48 || event.keyCode > 57 && event.keyCode < 190) event.returnValue = false
+            },
+            
+            
+        },
+        created () {
+            
+        },
+        mounted() {
+            
+        },
+        })
+    </script>
+</body>
+</html>
